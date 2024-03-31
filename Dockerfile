@@ -1,13 +1,4 @@
-FROM python:3.9.13-stretch AS BASE
-
-RUN apt-get update \
-    && apt-get --assume-yes --no-install-recommends install \
-        build-essential \
-        curl \
-        git \
-        jq \
-        libgomp1 \
-        vim
+FROM python:3.9.13-bullseye AS BASE
 
 WORKDIR /app
 
