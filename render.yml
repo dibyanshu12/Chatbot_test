@@ -1,0 +1,37 @@
+services:
+  - name: rasa-server
+    buildCommand: bash -c "rm -rf models/* && rasa train && rasa run --enable-api --cors '*'"  
+    startCommand: rasa run --enable-api --cors '*' --debug
+    env:  
+      - key: PYTHONUNBUFFERED
+        value: "1"
+    dockerfilePath: Dockerfile
+    sourceDir: .
+    envVars:
+      - key: TZ
+        value: "UTC"
+    ports:
+      - 5006
+    instanceCount: 1
+    plan: starter
+    disk:
+      name: rasa-server-data
+      mountPath: /app/data
+    healthCheckPath: /
+  
+  - name: rasa-actions-server
+    buildCommand: bash -c "rm -rf models/* && rasa train && rasa run actions"
+    startCommand: rasa run actions
+    env:  
+      - key: PYTHONUNBUFFERED
+        value: "1"
+    dockerfilePath: Dockerfile
+    sourceDir: .
+    envVars:
+      - key: TZ
+        value: "UTC"
+    ports:
+      - 5055
+    instanceCount: 1
+    plan: starter
+    healthCheckPath: /
