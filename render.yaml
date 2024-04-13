@@ -1,5 +1,5 @@
 services:
-  rasa-server:
+  - name: rasa-server
     buildCommand: bash -c "rm -rf models/* && rasa train && rasa run --enable-api --cors '*'"  
     startCommand: rasa run --enable-api --cors '*' --debug
     env:  
@@ -19,7 +19,7 @@ services:
       mountPath: /app/data
     healthCheckPath: /
   
-  rasa-actions-server:
+  - name: rasa-actions-server
     buildCommand: bash -c "rm -rf models/* && rasa train && rasa run actions"
     startCommand: rasa run actions
     env:  
